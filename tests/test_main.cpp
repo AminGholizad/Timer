@@ -1,10 +1,10 @@
-#include "Timer.hpp"
+#include <Timer.hpp>
 #include <cassert>
 
 int main() {
     {
-        Timer timer1{};
-        Timer timer2{};
+        Timer::Timer timer1{};
+        Timer::Timer timer2{};
         constexpr auto milisecond = Timer::milliseconds_t(1);
         constexpr int repeteations = 10000;
         Timer::milliseconds_t actual_time{};
