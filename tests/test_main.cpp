@@ -5,20 +5,20 @@ int main() {
     {
         Timer::Timer timer1{};
         Timer::Timer timer2{};
-        constexpr auto milisecond = Timer::milliseconds_t(1);
         constexpr int repeteations = 10000;
-        Timer::milliseconds_t actual_time{};
+        constexpr Timer::milliseconds_t wait_time{1};
+        Timer::milliseconds_t count_time{};
         timer1.tic();
         for (int i{0}; i < repeteations; ++i) {
             timer2.reset();
-            while (timer2.is_time_remaining(milisecond)) {
+            while (timer2.is_time_remaining(wait_time)) {
                 // wait...
             }
-            actual_time += timer2.elapsed();
+            count_time += timer2.elapsed();
         }
         auto duration = timer1.elapsed();
-        assert(duration > actual_time);
-        assert(duration < (actual_time + milisecond));
+        assert(duration > count_time);
+        assert(duration > (repeteations * (wait_time - Timer::MICRO)));
     }
     return 0;
 }
