@@ -58,12 +58,21 @@ add_library(Timer::Timer ALIAS Timer)
 
 option(Timer_BUILD_TESTS "Build tests" ON)
 if (Timer_BUILD_TESTS)
+    include(FetchContent)
+
+    FetchContent_Declare(
+    Catch2
+    GIT_REPOSITORY https://github.com/catchorg/Catch2.git
+    GIT_TAG v3.11.0
+    )
+
+    FetchContent_MakeAvailable(Catch2)
     enable_testing()
     add_executable(TimerTests
         tests/test_main.cpp
     )
     target_include_directories(TimerTests PRIVATE ${PROJECT_SOURCE_DIR}/include)
-    target_link_libraries(TimerTests PRIVATE Timer)
+    target_link_libraries(TimerTests PRIVATE Timer Catch2::Catch2WithMain)
 
     # Apply the same strict warnings
     target_compile_options(TimerTests PRIVATE
@@ -85,5 +94,6 @@ if (Timer_BUILD_TESTS)
         \$<$<CONFIG:Debug>:-g>
         \$<$<CONFIG:RelWithDebInfo>:-g>
     )
-    add_test(NAME TimerTests COMMAND TimerTests)
+    include(Catch)
+    catch_discover_tests(TimerTests)
 endif()
