@@ -56,7 +56,7 @@ target_include_directories(Timer INTERFACE
 
 add_library(Timer::Timer ALIAS Timer)
 
-option(Timer_BUILD_TESTS "Build tests" ON)
+option(Timer_BUILD_TESTS "Build tests" ${PROJECT_IS_TOP_LEVEL})
 if (Timer_BUILD_TESTS)
     include(FetchContent)
 
